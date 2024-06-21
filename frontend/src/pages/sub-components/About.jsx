@@ -47,10 +47,9 @@ function About() {
           </div>
           <div className="flex justify-center flex-col tracking-[1px] text-xl gap-5">
             <p>
-              My name is Zeeshan, but my followers call me Zeeshu. I will
-              graduate in Software Engineering from SMIU around 2024. I work as
-              a web developer and freelancer. My hobbies include watching
-              movies, series, playing video games, and occasionally cooking.
+              Hello, I am Zeeshan Afzal Khan. I will
+              graduate in Software Engineering from AKTU in 2026. I work as
+              a web developer and freelancer. My hobbies includes learing about universe, watch sci-fi movies and shows, and occasionally cooking.
             </p>
             <p>
               I have interests not only in technology but also in movies,

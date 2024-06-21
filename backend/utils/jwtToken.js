@@ -7,6 +7,9 @@ export const generateToken = (user, res) => {
     sameSite: "None",
     secure: true
   })
-
-  return token;
+  .json({
+    success: true,
+    user,
+    token
+  });
 }
