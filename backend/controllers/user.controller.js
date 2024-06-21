@@ -89,7 +89,7 @@ export const login = catchAsyncError(async (req, res, next) => {
 
   if(!isPasswordCorrect) return next(new ErrorHandler("Incorrect Password"));
 
-  const token = generateToken(user);
+  const token = generateToken(user, res);
 
   const options = {
     httpOnly: true,
@@ -291,8 +291,7 @@ export const resetPassword = catchAsyncError(async (req, res, next) => {
   user.resetPasswordToken = undefined;
   await user.save();
 
-  const token = generateToken(user);
-  console.log(token);
+  const token = generateToken(user, res);
 
   const options = {
     httpOnly: true,
