@@ -9,7 +9,7 @@ const userSlice = createSlice({
     isAuthenticated: false,
     error: null,
     message: null,
-    isUpdated: false
+    isUpdated: false,
   },
 
   reducers: {
@@ -17,50 +17,50 @@ const userSlice = createSlice({
       state.loading = true;
       state.isAuthenticated = false;
       state.user = {};
-      state.error = null; 
+      state.error = null;
     },
     loginSuccess(state, action) {
       state.loading = false;
       state.isAuthenticated = true;
       state.user = action.payload;
-      state.error = null; 
+      state.error = null;
     },
     loginFailed(state, action) {
       state.loading = false;
       state.isAuthenticated = false;
       state.user = {};
-      state.error = action.payload; 
+      state.error = action.payload;
     },
     logoutSuccess(state, action) {
       state.loading = false;
       state.isAuthenticated = false;
       state.user = {};
       state.error = null;
-      state.message = action.payload.message
+      state.message = action.payload.message;
     },
     logoutFailed(state, action) {
       state.loading = false;
       state.isAuthenticated = state.isAuthenticated;
       state.user = state.user;
-      state.error = action.payload; 
+      state.error = action.payload;
     },
     loadUserRequest(state, action) {
       state.loading = true;
       state.isAuthenticated = false;
       state.user = {};
-      state.error = null; 
+      state.error = null;
     },
     loadUserSuccess(state, action) {
       state.loading = false;
       state.isAuthenticated = true;
       state.user = action.payload;
-      state.error = null; 
+      state.error = null;
     },
     loadUserFailed(state, action) {
       state.loading = false;
       state.isAuthenticated = false;
       state.user = {};
-      state.error = action.payload; 
+      state.error = action.payload;
     },
     updatePasswordRequest(state, action) {
       state.loading = true;
@@ -110,12 +110,11 @@ const userSlice = createSlice({
   },
 });
 
-
-export const login = (email, password) => async(dispatch) => {
-  dispatch(userSlice.actions.loginRequest())
+export const login = (email, password) => async (dispatch) => {
+  dispatch(userSlice.actions.loginRequest());
   try {
     const { data } = await axios.post(
-      "http://localhost:4000/api/v1/user/login",
+      "https://portfolio-ip3n.onrender.com/api/v1/user/login",
       { email, password },
       {
         withCredentials: true,
@@ -125,16 +124,15 @@ export const login = (email, password) => async(dispatch) => {
 
     dispatch(userSlice.actions.loginSuccess(data.user));
     dispatch(userSlice.actions.clearAllErrors());
-
   } catch (error) {
-    dispatch(userSlice.actions.loginFailed(error.response.data.message))
+    dispatch(userSlice.actions.loginFailed(error.response.data.message));
   }
-}
+};
 
-export const logout = () => async(dispatch) => {
+export const logout = () => async (dispatch) => {
   try {
     const { data } = await axios.get(
-      "http://localhost:4000/api/v1/user/logout",
+      "https://portfolio-ip3n.onrender.com/api/v1/user/logout",
       {
         withCredentials: true,
       }
@@ -142,56 +140,58 @@ export const logout = () => async(dispatch) => {
 
     dispatch(userSlice.actions.logoutSuccess(data.message));
     dispatch(userSlice.actions.clearAllErrors());
-
   } catch (error) {
-    dispatch(userSlice.actions.logoutFailed(error.response.data.message))
+    dispatch(userSlice.actions.logoutFailed(error.response.data.message));
   }
-}
+};
 
-export const getUser = () => async(dispatch) => {
-  dispatch(userSlice.actions.loadUserRequest())
+export const getUser = () => async (dispatch) => {
+  dispatch(userSlice.actions.loadUserRequest());
   try {
     const { data } = await axios.get(
-      "http://localhost:4000/api/v1/user/getuser",
-      {withCredentials: true},
+      "https://portfolio-ip3n.onrender.com/api/v1/user/getuser",
+      { withCredentials: true }
     );
 
     dispatch(userSlice.actions.loadUserSuccess(data.user));
     dispatch(userSlice.actions.clearAllErrors());
-
   } catch (error) {
-    dispatch(userSlice.actions.loadUserFailed(error.response.data.message))
-  }
-}
-
-export const updatePassword = ( currentPassword, newPassword, confirmNewPassword ) => async (dispatch) => {
-  dispatch(userSlice.actions.updatePasswordRequest());
-  try {
-    const data = await axios.put(
-      "http://localhost:4000/api/v1/user/update/password",
-      {
-        currentPassword,
-        newPassword,
-        confirmNewPassword,
-      },
-      {
-        withCredentials: true,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-
-    dispatch(userSlice.actions.updatePasswordSuccess(data.message));
-    dispatch(userSlice.actions.clearAllErrors());
-  } catch (error) {
-    dispatch(userSlice.actions.updatePasswordFailed(error.response.data.message))
+    dispatch(userSlice.actions.loadUserFailed(error.response.data.message));
   }
 };
 
-export const updateProfile = ( newData ) => async(dispatch) => {
+export const updatePassword =
+  (currentPassword, newPassword, confirmNewPassword) => async (dispatch) => {
+    dispatch(userSlice.actions.updatePasswordRequest());
+    try {
+      const data = await axios.put(
+        "https://portfolio-ip3n.onrender.com/api/v1/user/update/password",
+        {
+          currentPassword,
+          newPassword,
+          confirmNewPassword,
+        },
+        {
+          withCredentials: true,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      dispatch(userSlice.actions.updatePasswordSuccess(data.message));
+      dispatch(userSlice.actions.clearAllErrors());
+    } catch (error) {
+      dispatch(
+        userSlice.actions.updatePasswordFailed(error.response.data.message)
+      );
+    }
+  };
+
+export const updateProfile = (newData) => async (dispatch) => {
   dispatch(userSlice.actions.updateProfileRequest());
   try {
     const { data } = await axios.put(
-      "http://localhost:4000/api/v1/user/update/profile", newData,
+      "https://portfolio-ip3n.onrender.com/api/v1/user/update/profile",
+      newData,
       {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
@@ -201,16 +201,18 @@ export const updateProfile = ( newData ) => async(dispatch) => {
     dispatch(userSlice.actions.updateProfileSuccess(data.message));
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
-    dispatch(userSlice.actions.updateProfileFailed(error.response.data.message))
+    dispatch(
+      userSlice.actions.updateProfileFailed(error.response.data.message)
+    );
   }
 };
 
-export const resetProfile = () => async(dispatch) => {
-  dispatch(userSlice.actions.updateProfileResetAfterUpdate())
-}
+export const resetProfile = () => async (dispatch) => {
+  dispatch(userSlice.actions.updateProfileResetAfterUpdate());
+};
 
 export const clearAllUserErrors = () => (dispatch) => {
-  dispatch(userSlice.actions.clearAllErrors())
-}
+  dispatch(userSlice.actions.clearAllErrors());
+};
 
 export default userSlice.reducer;

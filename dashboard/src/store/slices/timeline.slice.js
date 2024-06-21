@@ -62,12 +62,12 @@ const timelineSlice = createSlice({
     },
     clearAllErrors(state, action) {
       state.error = null;
-      state.loading = false
+      state.loading = false;
     },
     clearAllMessages(state, action) {
       state.message = null;
       state.loading = false;
-    }
+    },
   },
 });
 
@@ -75,7 +75,7 @@ export const getAllTimeline = () => async (dispatch) => {
   dispatch(timelineSlice.actions.getAllTimelineRequest());
   try {
     const { data } = await axios.get(
-      "http://localhost:4000/api/v1/timeline/getall",
+      "https://portfolio-ip3n.onrender.com/api/v1/timeline/getall",
       { withCredentials: true }
     );
 
@@ -93,13 +93,14 @@ export const addTimeline = (timelineData) => async (dispatch) => {
   dispatch(timelineSlice.actions.addTimelineRequest());
   try {
     const { data } = await axios.post(
-      `http://localhost:4000/api/v1/timeline/add`,
+      `https://portfolio-ip3n.onrender.com/api/v1/timeline/add`,
       timelineData,
-      { withCredentials: true,
+      {
+        withCredentials: true,
         headers: {
-          "Content-Type": "application/json"
-        }
-       }
+          "Content-Type": "application/json",
+        },
+      }
     );
     dispatch(timelineSlice.actions.addTimelineSuccess(data.message));
     dispatch(timelineSlice.actions.clearAllErrors());
@@ -110,12 +111,11 @@ export const addTimeline = (timelineData) => async (dispatch) => {
   }
 };
 
-
 export const deleteTimeline = (id) => async (dispatch) => {
   dispatch(timelineSlice.actions.deleteTimelineRequest());
   try {
     const { data } = await axios.delete(
-      `http://localhost:4000/api/v1/timeline/delete/${id}`,
+      `https://portfolio-ip3n.onrender.com/api/v1/timeline/delete/${id}`,
       { withCredentials: true }
     );
     dispatch(timelineSlice.actions.deleteTimelineSuccess(data.message));
@@ -137,6 +137,6 @@ export const resetTimelineSlice = () => (dispatch) => {
 
 export const clearAllTimelineMessage = () => (dispatch) => {
   dispatch(timelineSlice.actions.clearAllMessages());
-}
+};
 
 export default timelineSlice.reducer;

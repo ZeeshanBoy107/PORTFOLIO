@@ -1,22 +1,32 @@
-import { Button } from '@/components/ui/button';
-import axios from 'axios';
-import { ExternalLink, Facebook, Github, Instagram, Linkedin, Twitter, X, Youtube } from 'lucide-react';
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
-import { Typewriter } from 'react-simple-typewriter';
+import { Button } from "@/components/ui/button";
+import axios from "axios";
+import {
+  ExternalLink,
+  Facebook,
+  Github,
+  Instagram,
+  Linkedin,
+  Twitter,
+  X,
+  Youtube,
+} from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Typewriter } from "react-simple-typewriter";
 
 function Hero() {
   const [user, setUser] = useState({});
 
-  useEffect ( () => {
+  useEffect(() => {
     const getMyProfile = async () => {
-      const { data } = await axios.get("http://localhost:4000/api/v1/user/portfolio", 
-        {withCredentials: true}
-      )
+      const { data } = await axios.get(
+        "https://portfolio-ip3n.onrender.com/api/v1/user/portfolio",
+        { withCredentials: true }
+      );
       setUser(data.user);
-    }
+    };
     getMyProfile();
-  }, [])
+  }, []);
 
   const typewriterWords = user.fullName
     ? [
@@ -76,10 +86,10 @@ function Hero() {
           </Button>
         </Link>
       </div>
-      <p className='mt-8 sm:text-l text-xl tracking-[2px]'>{user?.aboutMe}</p>
-      <hr className='my-8 md:my-10'/>
+      <p className="mt-8 sm:text-l text-xl tracking-[2px]">{user?.aboutMe}</p>
+      <hr className="my-8 md:my-10" />
     </div>
   );
 }
 
-export default Hero
+export default Hero;

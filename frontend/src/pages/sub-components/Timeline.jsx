@@ -1,14 +1,13 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 function Timeline() {
-
   const [timeline, setTimeline] = useState([]);
 
   useEffect(() => {
     const getMyTimeline = async () => {
       const { data } = await axios.get(
-        "http://localhost:4000/api/v1/timeline/getall",
+        "https://portfolio-ip3n.onrender.com/api/v1/timeline/getall",
         { withCredentials: true }
       );
       setTimeline(data.timelines);
@@ -57,4 +56,4 @@ function Timeline() {
   );
 }
 
-export default Timeline
+export default Timeline;

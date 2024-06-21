@@ -1,21 +1,19 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 function About() {
-
   const [user, setUser] = useState({});
 
   useEffect(() => {
     const getMyProfile = async () => {
       const { data } = await axios.get(
-        "http://localhost:4000/api/v1/user/portfolio",
+        "https://portfolio-ip3n.onrender.com/api/v1/user/portfolio",
         { withCredentials: true }
       );
       setUser(data.user);
     };
     getMyProfile();
   }, []);
-
 
   return (
     <div className="w-full flex flex-col overflow-x-hidden">
@@ -71,4 +69,4 @@ function About() {
   );
 }
 
-export default About
+export default About;

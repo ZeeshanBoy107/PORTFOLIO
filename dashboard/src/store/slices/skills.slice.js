@@ -74,72 +74,85 @@ const skillSlice = createSlice({
 export const getAllSkills = () => async (dispatch) => {
   dispatch(skillSlice.actions.getAllSkillRequest());
   try {
-    const { data } = await axios.get("http://localhost:4000/api/v1/skill/getall", {withCredentials: true});
+    const { data } = await axios.get(
+      "https://portfolio-ip3n.onrender.com/api/v1/skill/getall",
+      { withCredentials: true }
+    );
     dispatch(skillSlice.actions.getAllSkillSuccess(data.skills));
     dispatch(skillSlice.actions.clearAllSkillErrors());
   } catch (error) {
     dispatch(skillSlice.actions.getAllSkillFailed(error.response.data.message));
   }
-}
+};
 
 export const addNewSkill = (skillData) => async (dispatch) => {
   dispatch(skillSlice.actions.addNewSkillRequest());
   try {
-    const { data } = await axios.post("http://localhost:4000/api/v1/skill/add", skillData, {withCredentials:true, headers: {
-      "Content-Type": "multipart/form-data"
-    }});
+    const { data } = await axios.post(
+      "https://portfolio-ip3n.onrender.com/api/v1/skill/add",
+      skillData,
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
     dispatch(skillSlice.actions.addNewSkillSuccess(data.message));
     dispatch(skillSlice.actions.clearAllSkillErrors());
   } catch (error) {
     dispatch(skillSlice.actions.addNewSkillFailed(error.response.data.message));
     dispatch(clearAllSkillMessage());
   }
-}
+};
 
 export const deleteSkill = (id) => async (dispatch) => {
   dispatch(skillSlice.actions.deleteSkillRequest());
   try {
-    const { data } = await axios.delete(`http://localhost:4000/api/v1/skill/delete/${id}`, {withCredentials: true});
+    const { data } = await axios.delete(
+      `https://portfolio-ip3n.onrender.com/api/v1/skill/delete/${id}`,
+      { withCredentials: true }
+    );
     dispatch(skillSlice.actions.deleteSkillSuccess(data.message));
     dispatch(skillSlice.actions.clearAllSkillErrors());
   } catch (error) {
     dispatch(skillSlice.actions.deleteSkillFailed(error.response.data.message));
     dispatch(skillSlice.actions.clearAllSkillMessage());
   }
-}
+};
 
 export const updateSkill = (id, proficiency) => async (dispatch) => {
   dispatch(skillSlice.actions.updateSkillRequest());
   try {
     const { data } = await axios.post(
-      `http://localhost:4000/api/v1/skill/update/${id}`,
+      `https://portfolio-ip3n.onrender.com/api/v1/skill/update/${id}`,
       { proficiency },
-      { 
-        withCredentials: true, 
-        headers: 
-      {"Content-Type": "application/json"},}
+      {
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" },
+      }
     );
     dispatch(skillSlice.actions.updateSkillSuccess(data.message));
     dispatch(skillSlice.actions.clearAllSkillErrors());
   } catch (error) {
     console.log(error);
-    dispatch(skillSlice.actions.updateSkillFailed(error?.response?.data?.message));
-    dispatch(skillSlice.actions.clearAllSkillMessage())
+    dispatch(
+      skillSlice.actions.updateSkillFailed(error?.response?.data?.message)
+    );
+    dispatch(skillSlice.actions.clearAllSkillMessage());
   }
-}
+};
 
 export const clearAllSkillError = () => (dispatch) => {
-  dispatch(skillSlice.actions.clearAllSkillErrors())
-}
+  dispatch(skillSlice.actions.clearAllSkillErrors());
+};
 
 export const clearAllSkillMessage = () => (dispatch) => {
-  dispatch(skillSlice.actions.clearAllSkillMessage())
-}
+  dispatch(skillSlice.actions.clearAllSkillMessage());
+};
 
 export const resetSkillSlice = () => (dispatch) => {
   dispatch(skillSlice.actions.resetSkillSlice());
-}
-
-
+};
 
 export default skillSlice.reducer;

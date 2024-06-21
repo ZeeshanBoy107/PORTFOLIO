@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const forgotResetPasswordSlice = createSlice({
-    name: "forgotPassword",
-    initialState: {
+  name: "forgotPassword",
+  initialState: {
     loading: false,
     error: null,
     message: null,
@@ -13,7 +13,7 @@ const forgotResetPasswordSlice = createSlice({
     forgotPasswordRequest(state, action) {
       state.loading = true;
       state.error = null;
-      state.message = null
+      state.message = null;
     },
     forgotPasswordSuccess(state, action) {
       state.loading = false;
@@ -28,7 +28,7 @@ const forgotResetPasswordSlice = createSlice({
     resetPasswordRequest(state, action) {
       state.loading = true;
       state.error = null;
-      state.message = null
+      state.message = null;
     },
     resetPasswordSuccess(state, action) {
       state.loading = false;
@@ -39,7 +39,7 @@ const forgotResetPasswordSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
       state.message = null;
-    }, 
+    },
     clearAllErrors(state, action) {
       state.error = null;
       state = state;
@@ -51,7 +51,7 @@ export const forgotPassword = (email) => async (dispatch) => {
   dispatch(forgotResetPasswordSlice.actions.forgotPasswordRequest());
   try {
     const data = await axios.post(
-      "http://localhost:4000/api/v1/user/password/forgot",
+      "https://portfolio-ip3n.onrender.com/api/v1/user/password/forgot",
       { email },
       {
         withCredentials: true,
@@ -59,31 +59,44 @@ export const forgotPassword = (email) => async (dispatch) => {
       }
     );
 
-    dispatch(forgotResetPasswordSlice.actions.forgotPasswordSuccess(data.message));
-    dispatch(forgotResetPasswordSlice.actions.clearAllErrors())
-  } catch (error) {
-    dispatch(forgotResetPasswordSlice.actions.forgotPasswordFailed(error.response.data.message));
-  }
-};
-
-export const resetPassword = (resettoken, password, confirmPassword) => async (dispatch) => {
-  dispatch(forgotResetPasswordSlice.actions.resetPasswordRequest());
-  try {
-    const data = await axios.put(
-      `http://localhost:4000/api/v1/user/password/reset/${resettoken}`,
-      { password, confirmPassword },
-      {
-        withCredentials: true,
-        headers: { "Content-Type": "application/json" },
-      }
+    dispatch(
+      forgotResetPasswordSlice.actions.forgotPasswordSuccess(data.message)
     );
-
-    dispatch(forgotResetPasswordSlice.actions.resetPasswordSuccess(data.message));
-    dispatch(forgotResetPasswordSlice.actions.clearAllErrors())
+    dispatch(forgotResetPasswordSlice.actions.clearAllErrors());
   } catch (error) {
-    dispatch(forgotResetPasswordSlice.actions.resetPasswordFailed(error.response.data.message));
+    dispatch(
+      forgotResetPasswordSlice.actions.forgotPasswordFailed(
+        error.response.data.message
+      )
+    );
   }
 };
+
+export const resetPassword =
+  (resettoken, password, confirmPassword) => async (dispatch) => {
+    dispatch(forgotResetPasswordSlice.actions.resetPasswordRequest());
+    try {
+      const data = await axios.put(
+        `https://portfolio-ip3n.onrender.com/api/v1/user/password/reset/${resettoken}`,
+        { password, confirmPassword },
+        {
+          withCredentials: true,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      dispatch(
+        forgotResetPasswordSlice.actions.resetPasswordSuccess(data.message)
+      );
+      dispatch(forgotResetPasswordSlice.actions.clearAllErrors());
+    } catch (error) {
+      dispatch(
+        forgotResetPasswordSlice.actions.resetPasswordFailed(
+          error.response.data.message
+        )
+      );
+    }
+  };
 
 export const clearAllForgotPasswordrErrors = () => (dispatch) => {
   dispatch(forgotResetPasswordSlice.actions.clearAllErrors());

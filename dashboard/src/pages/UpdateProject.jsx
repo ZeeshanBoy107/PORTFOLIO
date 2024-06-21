@@ -24,7 +24,6 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 
 function UpdateProject() {
-
   const { loading, error, message } = useSelector((state) => state.project);
 
   const dispatch = useDispatch();
@@ -43,7 +42,7 @@ function UpdateProject() {
 
   const getProject = async () => {
     await axios
-      .get(`http://localhost:4000/api/v1/project/get/${id}`, {
+      .get(`https://portfolio-ip3n.onrender.com/api/v1/project/get/${id}`, {
         withCredentials: true,
       })
       .then((res) => {

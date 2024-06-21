@@ -1,25 +1,22 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 function Project() {
-
   const [viewAll, setViewAll] = useState(false);
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     const getMyProjects = async () => {
       const { data } = await axios.get(
-        "http://localhost:4000/api/v1/project/getall",
+        "https://portfolio-ip3n.onrender.com/api/v1/project/getall",
         { withCredentials: true }
       );
       setProjects(data.projects);
     };
     getMyProjects();
   }, []);
-
-
 
   return (
     <div>
@@ -32,7 +29,7 @@ function Project() {
             background: "hsl(222.2 84% 4.9%)",
           }}
         >
-          <span className='text-white'>MY{" "}</span>
+          <span className="text-white">MY </span>
           <span className="text-tubeLight-effect font-extrabold">PROJECTS</span>
         </h1>
         <h1
@@ -91,4 +88,4 @@ function Project() {
   );
 }
 
-export default Project   
+export default Project;

@@ -1,12 +1,11 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import axios from 'axios';
-import React, { useState } from 'react'
-import { toast } from 'react-toastify';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import axios from "axios";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 function Contact() {
-
   const [senderName, setSenderName] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
@@ -15,18 +14,27 @@ function Contact() {
   const handleSendMessage = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await axios.post("http://localhost:4000/api/v1/message/send", {senderName, subject, message}, {withCredentials: true, headers: {"Content-Type": "application/json"}})
-    .then(res => {
-      toast.success(res.data.message);
-      setSenderName("");
-      setSubject("");
-      setMessage("");
-      setLoading(false);
-    }).catch(error => {
-      toast.error(error.response.data.message);
-      setLoading(false);
-    }) 
-  }
+    await axios
+      .post(
+        "https://portfolio-ip3n.onrender.com/api/v1/message/send",
+        { senderName, subject, message },
+        {
+          withCredentials: true,
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+      .then((res) => {
+        toast.success(res.data.message);
+        setSenderName("");
+        setSubject("");
+        setMessage("");
+        setLoading(false);
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+        setLoading(false);
+      });
+  };
 
   return (
     <>
@@ -43,8 +51,10 @@ function Contact() {
             CONTACT
             <span className="text-tubeLight-effect font-extrabold">ME</span>
           </h1>
-          <span className="absolute w-full h-1 top-7 sm:top-7 
-          md:top-8 lg:top-11 z-[-1] bg-slate-200"></span>
+          <span
+            className="absolute w-full h-1 top-7 sm:top-7 
+          md:top-8 lg:top-11 z-[-1] bg-slate-200"
+          ></span>
         </div>
         <form onSubmit={handleSendMessage} className="flex flex-col gap-6">
           <div className="flex flex-col gap-2 px-1.5">
@@ -104,7 +114,7 @@ function Contact() {
         </form>
       </div>
     </>
-  )
+  );
 }
 
-export default Contact
+export default Contact;

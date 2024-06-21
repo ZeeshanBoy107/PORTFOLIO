@@ -63,13 +63,19 @@ export const getAllApplications = () => async (dispatch) => {
   dispatch(applicationSlice.actions.getAllApplicationRequest());
   try {
     const { data } = await axios.get(
-      "http://localhost:4000/api/v1/softwareapplication/getall",
+      "https://portfolio-ip3n.onrender.com/api/v1/softwareapplication/getall",
       { withCredentials: true }
     );
-    dispatch(applicationSlice.actions.getAllApplicationSuccess(data.softwareApps));
+    dispatch(
+      applicationSlice.actions.getAllApplicationSuccess(data.softwareApps)
+    );
     dispatch(applicationSlice.actions.clearAllApplicationErrors());
   } catch (error) {
-    dispatch(applicationSlice.actions.getAllApplicationFailed(error.response.data.message));
+    dispatch(
+      applicationSlice.actions.getAllApplicationFailed(
+        error.response.data.message
+      )
+    );
   }
 };
 
@@ -77,7 +83,7 @@ export const addNewApplication = (applicationData) => async (dispatch) => {
   dispatch(applicationSlice.actions.addNewApplicationRequest());
   try {
     const { data } = await axios.post(
-      "http://localhost:4000/api/v1/softwareapplication/add",
+      "https://portfolio-ip3n.onrender.com/api/v1/softwareapplication/add",
       applicationData,
       {
         withCredentials: true,
@@ -89,7 +95,11 @@ export const addNewApplication = (applicationData) => async (dispatch) => {
     dispatch(applicationSlice.actions.addNewApplicationSuccess(data.message));
     dispatch(applicationSlice.actions.clearAllApplicationErrors());
   } catch (error) {
-    dispatch(applicationSlice.actions.addNewApplicationFailed(error.response.data.message));
+    dispatch(
+      applicationSlice.actions.addNewApplicationFailed(
+        error.response.data.message
+      )
+    );
     dispatch(clearAllApplicationMessage());
   }
 };
@@ -98,8 +108,8 @@ export const deleteApplication = (id) => async (dispatch) => {
   dispatch(applicationSlice.actions.deleteApplicationRequest());
   try {
     const { data } = await axios.delete(
-      `http://localhost:4000/api/v1/softwareapplication/delete/${id}`,
-      {withCredentials: true}
+      `https://portfolio-ip3n.onrender.com/api/v1/softwareapplication/delete/${id}`,
+      { withCredentials: true }
     );
     dispatch(applicationSlice.actions.deleteApplicationSuccess(data.message));
     dispatch(applicationSlice.actions.clearAllApplicationErrors());

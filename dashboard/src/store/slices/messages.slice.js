@@ -1,5 +1,4 @@
-
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const messageSlice = createSlice({
@@ -27,7 +26,7 @@ const messageSlice = createSlice({
     },
     deleteMessageRequest(state, action) {
       state.loading = true;
-      state.message = null
+      state.message = null;
       state.error = null;
     },
     deleteMessageSuccess(state, action) {
@@ -43,7 +42,7 @@ const messageSlice = createSlice({
     resetMessageSlice(state, action) {
       state.error = null;
       state.messages = state.messages;
-      state.error = null
+      state.error = null;
     },
     clearAllErrors(state, action) {
       state.error = null;
@@ -53,49 +52,52 @@ const messageSlice = createSlice({
     clearAllMessages(state, action) {
       state.message = null;
       state.loading = null;
-    }
-  }
+    },
+  },
 });
 
 export const getAllMessages = () => async (dispatch) => {
   dispatch(messageSlice.actions.getAllMessagesRequest());
   try {
-    const { data } = await axios.get("http://localhost:4000/api/v1/message/getall", {withCredentials: true})
+    const { data } = await axios.get(
+      "https://portfolio-ip3n.onrender.com/api/v1/message/getall",
+      { withCredentials: true }
+    );
 
     dispatch(messageSlice.actions.getAllMessagesSuccess(data.messages));
     dispatch(messageSlice.actions.clearAllErrors());
   } catch (error) {
-    dispatch(messageSlice.actions.getAllMessagesFailed(error.response.data.message));
+    dispatch(
+      messageSlice.actions.getAllMessagesFailed(error.response.data.message)
+    );
   }
-}
+};
 
-export const deleteMessage = (id) => async  (dispatch) => {
+export const deleteMessage = (id) => async (dispatch) => {
   dispatch(messageSlice.actions.deleteMessageRequest());
   try {
-    const {data} = await axios.delete(
-      `http://localhost:4000/api/v1/message/delete/${id}`,
+    const { data } = await axios.delete(
+      `https://portfolio-ip3n.onrender.com/api/v1/message/delete/${id}`,
       { withCredentials: true }
     );
     dispatch(messageSlice.actions.deleteMessageSuccess(data.message));
     dispatch(messageSlice.actions.clearAllErrors());
   } catch (error) {
-    dispatch(messageSlice.actions.deleteMessageFailed(error.response.data.message))
+    dispatch(
+      messageSlice.actions.deleteMessageFailed(error.response.data.message)
+    );
   }
-}
+};
 
 export const clearAllMessageError = () => (dispatch) => {
   dispatch(messageSlice.actions.clearAllErrors());
-}
+};
 export const clearAllMessageMessage = () => (dispatch) => {
   dispatch(messageSlice.actions.clearAllMessages());
-}
+};
 
 export const resetMessageSlice = () => (dispatch) => {
   dispatch(messageSlice.actions.resetMessageSlice());
-}
-
-
-
-
+};
 
 export default messageSlice.reducer;

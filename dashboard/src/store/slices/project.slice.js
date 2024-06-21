@@ -2,15 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import skillsSlice from "./skills.slice";
 
-const projectSlice = createSlice( {
-  name: 'project',
+const projectSlice = createSlice({
+  name: "project",
   initialState: {
     loading: false,
     projects: [],
     error: null,
-    message: null
+    message: null,
   },
-  reducers : {
+  reducers: {
     getAllProjectsRequest(state, action) {
       state.loading = true;
     },
@@ -54,10 +54,10 @@ const projectSlice = createSlice( {
       state.loading = false;
       state.error = action.payload;
     },
-    clearAllProjectError(state,action) {
+    clearAllProjectError(state, action) {
       state.error = null;
     },
-    clearAllProjectMessage(state,action) {
+    clearAllProjectMessage(state, action) {
       state.message = null;
     },
     resetProjectSlice(state, action) {
@@ -65,27 +65,29 @@ const projectSlice = createSlice( {
       state.error = null;
       state.message = null;
       state.projects = state.projects;
-    }
-  }
-})
+    },
+  },
+});
 
 export const getAllProjects = () => async (dispatch) => {
   dispatch(projectSlice.actions.getAllProjectsRequest());
   try {
-    const { data } = await axios.get("http://localhost:4000/api/v1/project/getall");
+    const { data } = await axios.get(
+      "https://portfolio-ip3n.onrender.com/api/v1/project/getall"
+    );
     dispatch(projectSlice.actions.getAllProjectsSuccess(data.projects));
-    dispatch(projectSlice.actions.clearAllProjectError())
+    dispatch(projectSlice.actions.clearAllProjectError());
   } catch (error) {
     dispatch(projectSlice.actions.getAllProjectsFailed(error));
   }
-}
+};
 
-export const addNewProject = (projectData) => async(dispatch) => {
+export const addNewProject = (projectData) => async (dispatch) => {
   dispatch(projectSlice.actions.addProjectsRequest());
-  
+
   try {
     const { data } = await axios.post(
-      "http://localhost:4000/api/v1/project/add",
+      "https://portfolio-ip3n.onrender.com/api/v1/project/add",
       projectData,
       {
         withCredentials: true,
@@ -97,33 +99,36 @@ export const addNewProject = (projectData) => async(dispatch) => {
     dispatch(projectSlice.actions.addProjectsSuccess(data.message));
     dispatch(projectSlice.actions.clearAllProjectError());
   } catch (error) {
-    dispatch(projectSlice.actions.addProjectsFailed(error.response.data.message))
+    dispatch(
+      projectSlice.actions.addProjectsFailed(error.response.data.message)
+    );
   }
-}
+};
 
-
-export const deleteProject = (id) => async(dispatch) => {
+export const deleteProject = (id) => async (dispatch) => {
   dispatch(projectSlice.actions.deleteProjectsRequest());
-  
+
   try {
     const { data } = await axios.delete(
-      `http://localhost:4000/api/v1/project/delete/${id}`,
+      `https://portfolio-ip3n.onrender.com/api/v1/project/delete/${id}`,
       {
-        withCredentials: true
+        withCredentials: true,
       }
     );
     dispatch(projectSlice.actions.deleteProjectsSuccess(data.message));
     dispatch(projectSlice.actions.clearAllProjectError());
   } catch (error) {
-    dispatch(projectSlice.actions.deleteProjectsFailed(error.response.data.message))
+    dispatch(
+      projectSlice.actions.deleteProjectsFailed(error.response.data.message)
+    );
   }
-}
+};
 
 export const updateProject = (id, projectData) => async (dispatch) => {
   dispatch(projectSlice.actions.updateProjectsRequest());
   try {
     const { data } = await axios.post(
-      `http://localhost:4000/api/v1/project/update/${id}`,
+      `https://portfolio-ip3n.onrender.com/api/v1/project/update/${id}`,
       projectData,
       {
         withCredentials: true,
@@ -132,27 +137,25 @@ export const updateProject = (id, projectData) => async (dispatch) => {
         },
       }
     );
-    dispatch(projectSlice.actions.updateProjectsSuccess(data.message))
-    dispatch(projectSlice.actions.clearAllProjectError())
+    dispatch(projectSlice.actions.updateProjectsSuccess(data.message));
+    dispatch(projectSlice.actions.clearAllProjectError());
   } catch (error) {
-    dispatch(projectSlice.actions.updateProjectsFailed(error.response.data.message))
+    dispatch(
+      projectSlice.actions.updateProjectsFailed(error.response.data.message)
+    );
   }
-}
+};
 
 export const clearAllProjectError = () => (dispatch) => {
   dispatch(projectSlice.actions.clearAllProjectError());
-}
+};
 
 export const clearAllProjectMessage = () => (dispatch) => {
   dispatch(projectSlice.actions.clearAllProjectMessage());
-}
+};
 
 export const resetProjectSlice = () => (dispatch) => {
   dispatch(projectSlice.actions.resetProjectSlice());
-}
-
-
-
-
+};
 
 export default projectSlice.reducer;
