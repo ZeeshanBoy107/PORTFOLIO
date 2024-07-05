@@ -48,7 +48,7 @@ function Contact() {
               background: "hsl(222.2 84% 4.9%)",
             }}
           >
-            CONTACT
+            <span className="text-white">CONTACT </span>
             <span className="text-tubeLight-effect font-extrabold">ME</span>
           </h1>
           <span

@@ -31,11 +31,6 @@ function About() {
         </h1>
         <span className="absolute w-full h-1 top-7 sm:top-7 md:top-8 lg:top-11 z-[-1] bg-slate-200"></span>
       </div>
-      <div className="text-center">
-        <p className="uppercase text-xl text-slate-400">
-          Allow me to introduce myself.
-        </p>
-      </div>
       <div>
         <div className="grid md:grid-cols-2 my-8 sm:my-20 gap-14">
           <div className="flex justify-center items-center">
